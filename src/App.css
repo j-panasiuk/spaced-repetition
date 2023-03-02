@@ -25,21 +25,26 @@ main {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 8rem;
 }
 
 .Grid {
   --grid-rows: unset; /* set using `style` property */
   --grid-cols: unset; /* set using `style` property */
-  --grid-spacing: 0.25rem;
-  --grid-cell-size: 1rem;
+  --grid-padding: 1rem;
+  --grid-spacing: 0.125rem;
+  --grid-cell-template: 1fr;
 
-  background: wheat;
+  --grid-total-padding: calc(2 * var(--grid-padding));
+  --grid-total-spacing: calc((var(--grid-cols) - 1) * var(--grid-spacing));
+  --grid-total-available-space: calc(100vw - var(--grid-total-padding) - var(--grid-total-spacing));
+  --grid-cell-size: calc(var(--grid-total-available-space) / var(--grid-cols));
+
   display: grid;
-  padding: var(--grid-spacing);
+  padding: var(--grid-padding);
   gap: var(--grid-spacing);
-  grid-template-columns: repeat(var(--grid-cols), var(--grid-cell-size));
-  grid-template-rows: repeat(var(--grid-rows), var(--grid-cell-size));
+  grid-template-columns: repeat(var(--grid-cols), var(--grid-cell-template));
+  grid-template-rows: repeat(var(--grid-rows), var(--grid-cell-template));
+  background: wheat;
 }
 
 .GridRow {
@@ -47,11 +52,23 @@ main {
 }
 
 .GridCell {
-  background: white;
+  aspect-ratio: 1 / 1;
+  width: var(--grid-cell-size);
+  overflow: hidden;
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 900;
+  background: white;
   color: cornflowerblue;
+}
+
+@media screen and (max-width: 800px) {
+  .GridCell {
+    border-radius: 50%;
+    font-size: 0;
+    color: transparent;
+  }
 }
