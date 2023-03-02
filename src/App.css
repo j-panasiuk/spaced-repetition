@@ -31,7 +31,7 @@ main {
   --grid-rows: unset; /* set using `style` property */
   --grid-cols: unset; /* set using `style` property */
   --grid-padding: 1rem;
-  --grid-spacing: 0.125rem;
+  --grid-spacing: 0.25rem;
   --grid-cell-template: 1fr;
 
   --grid-total-padding: calc(2 * var(--grid-padding));
@@ -44,7 +44,6 @@ main {
   gap: var(--grid-spacing);
   grid-template-columns: repeat(var(--grid-cols), var(--grid-cell-template));
   grid-template-rows: repeat(var(--grid-rows), var(--grid-cell-template));
-  background: wheat;
 }
 
 .GridRow {
@@ -52,6 +51,17 @@ main {
 }
 
 .GridCell {
+  --cell-color-default: #ddd;
+  --cell-color-1: #14f493;
+  --cell-color-2: #21e0ba;
+  --cell-color-3: #31a888;
+  --cell-color-4: #238691;
+  --cell-color-5: #27657c;
+  --cell-color-6: #194068;
+  --cell-color-7: #092135;
+
+  --cell-color: var(--cell-color-default);
+
   aspect-ratio: 1 / 1;
   width: var(--grid-cell-size);
   overflow: hidden;
@@ -59,10 +69,8 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 900;
-  background: white;
-  color: cornflowerblue;
+  border-radius: 0.25rem;
+  background: var(--cell-color);
 }
 
 @media screen and (max-width: 800px) {
