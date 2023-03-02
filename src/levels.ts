@@ -8,3 +8,18 @@ function toLevel(n: number | undefined): Level | undefined {
 export function nextLevel(level: Level): Level | undefined {
   return toLevel(level + 1);
 }
+
+if (import.meta.vitest) {
+  const { expect, it } = import.meta.vitest;
+
+  it("has consecutive levels, starting from 1", () => {
+    expect(levels[0]).toBe(1);
+
+    for (const current of levels) {
+      const next = nextLevel(current);
+      if (next) {
+        expect(next - current).toBe(1);
+      }
+    }
+  });
+}

@@ -34,13 +34,19 @@ if (import.meta.vitest) {
     }
   });
 
-  it("has less repetitions on each consecutive level", () => {
+  it("has some repetitions for every level", () => {
+    for (const level of levels) {
+      expect(progression[level].length).toBeGreaterThanOrEqual(1);
+    }
+  });
+
+  it("has fewer repetitions on each consecutive level", () => {
     for (const current of levels) {
       const next = nextLevel(current);
       if (next) {
-        const currentRepetitions = progression[current].length;
-        const nextRepetitions = progression[next].length;
-        expect(currentRepetitions).toBeGreaterThan(nextRepetitions);
+        const currentLevelReps = progression[current].length;
+        const nextLevelReps = progression[next].length;
+        expect(nextLevelReps).toBeLessThan(currentLevelReps);
       }
     }
   });
