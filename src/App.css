@@ -8,6 +8,29 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --cell-color-default: #ddd;
+  --cell-outline-default: none;
+  --cell-text-default: #999;
+  --cell-transform-default: none;
+
+  --cell-color-1: #14f493;
+  --cell-color-2: #21e0ba;
+  --cell-color-3: #31a888;
+  --cell-color-4: #238691;
+  --cell-color-5: #27657c;
+  --cell-color-6: #194068;
+  --cell-color-7: #092135;
+  --cell-outline-selected: calc(1rem / 8) solid;
+  --cell-text-selected: #fff;
+  --cell-transform-selected: translateY(-10%);
+
+  --cell-color: var(--cell-color-default);
+  --cell-outline: var(--cell-outline-default);
+  --cell-text: var(--cell-text-default);
+  --cell-transform: var(--cell-transform-default);
+
+  --transition-default: all 0.2s ease-out;
 }
 
 body {
@@ -23,24 +46,26 @@ main {
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .Grid {
   --grid-rows: unset; /* set using `style` property */
   --grid-cols: unset; /* set using `style` property */
-  --grid-padding: 1rem;
+  --grid-paddingY: 1rem;
+  --grid-paddingX: 1rem;
   --grid-spacing: 0.25rem;
   --grid-cell-template: 1fr;
 
-  --grid-total-padding: calc(2 * var(--grid-padding));
+  --grid-total-padding: calc(2 * var(--grid-paddingX));
   --grid-total-spacing: calc((var(--grid-cols) - 1) * var(--grid-spacing));
   --grid-total-available-space: calc(100vw - var(--grid-total-padding) - var(--grid-total-spacing));
   --grid-cell-size: calc(var(--grid-total-available-space) / var(--grid-cols));
 
   display: grid;
-  padding: var(--grid-padding);
+  padding: var(--grid-paddingY) var(--grid-paddingX);
   gap: var(--grid-spacing);
   grid-template-columns: repeat(var(--grid-cols), var(--grid-cell-template));
   grid-template-rows: repeat(var(--grid-rows), var(--grid-cell-template));
@@ -51,32 +76,48 @@ main {
 }
 
 .GridCell {
-  --cell-color-default: #ddd;
-  --cell-color-1: #14f493;
-  --cell-color-2: #21e0ba;
-  --cell-color-3: #31a888;
-  --cell-color-4: #238691;
-  --cell-color-5: #27657c;
-  --cell-color-6: #194068;
-  --cell-color-7: #092135;
-
-  --cell-color: var(--cell-color-default);
-
   aspect-ratio: 1 / 1;
   width: var(--grid-cell-size);
-  overflow: hidden;
   user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0.25rem;
-  background: var(--cell-color);
+  border-radius: 0.125rem;
+  background-color: var(--cell-color);
+  outline: var(--cell-outline);
+  outline-offset: calc(-1rem / 16);
+  transition: var(--transition-default);
 }
 
-@media screen and (max-width: 800px) {
-  .GridCell {
-    border-radius: 50%;
-    font-size: 0;
-    color: transparent;
-  }
+h3 {
+  width: 100%;
+  text-align: center;
+}
+
+input[type="range"] {
+  width: calc(100vw - 2 * 1rem);
+  outline-offset: 0.125rem;
+}
+
+.Reps {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.Rep {
+  width: 4rem;
+  height: 4rem;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-family: monospace;
+  border-radius: 0.125rem;
+  background-color: var(--cell-color);
+  color: var(--cell-text);
+  transform: var(--cell-transform);
+  transition: var(--transition-default);
 }
