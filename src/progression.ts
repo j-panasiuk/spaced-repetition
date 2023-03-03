@@ -3,12 +3,12 @@ import { type Level, levels, nextLevel } from "./levels";
 
 export const progression: Record<Level, Day[]> = {
   1: days,
-  2: days.filter((n) => n % 2 === 1),
-  3: days.filter((n) => n % 4 === 2),
-  4: days.filter((n) => n % 16 === 4 || n % 16 === 13),
-  5: [12, 28, 44, 60],
-  6: [24, 59],
-  7: [56],
+  2: days.filter((n) => n % 2 === 0),
+  3: days.filter((n) => n % 4 === 3),
+  4: days.filter((n) => n % 16 === 5 || n % 16 === 14),
+  5: [13, 29, 45, 61],
+  6: [25, 60],
+  7: [57],
 };
 
 function getLevelsOnDay(day: Day): Level[] {
@@ -63,9 +63,9 @@ if (import.meta.vitest) {
 
   it("has level 2 repetitions every other day", () => {
     expect(
-      progression[2].every((dayOnLevel, i, daysOnLevel) => {
-        let nextDayOnLevel = daysOnLevel.at(i + 1);
-        return nextDayOnLevel ? nextDayOnLevel - dayOnLevel === 2 : true;
+      progression[2].every((dayAtLevel, i, daysAtLevel) => {
+        let nextDayAtLevel = daysAtLevel.at(i + 1);
+        return nextDayAtLevel ? nextDayAtLevel - dayAtLevel === 2 : true;
       })
     ).toBe(true);
   });
